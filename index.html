@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEN BİLİMLERİ ÇALIŞ ÖĞREN BAŞAR</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #E0E0E0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+            text-shadow: 2px 2px #000;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .container {
+            background: linear-gradient(135deg, #ffffff, #e3ffe7);
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            animation: fadeIn 2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        label {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 10px;
+            display: inline-block;
+            animation: slideIn 1.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        select:hover, button:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌟 FEN BİLİMLERİ ÇALIŞ ÖĞREN BAŞAR 🌟</h1>
+    <div class="container">
+        <form id="selectionForm">
+            <!-- Sınıf Seçimi -->
+            <label for="classSelect">✨ Sınıfınızı Seçin: ✨</label>
+            <select id="classSelect" required>
+                <option value="" disabled selected>Sınıf Seçin</option>
+                <option value="3">3. Sınıf</option>
+                <option value="4">4. Sınıf</option>
+                <option value="5">5. Sınıf</option>
+                <option value="6">6. Sınıf</option>
+                <option value="7">7. Sınıf</option>
+                <option value="8">8. Sınıf</option>
+            </select>
+
+            <!-- Ünite Seçimi -->
+            <label for="unitSelect">🌍 Üniteyi Seçin: 🌍</label>
+            <select id="unitSelect" required>
+                <option value="" disabled selected>Önce sınıf seçin</option>
+            </select>
+
+            <!-- Konu Seçimi -->
+            <label for="topicSelect">📚 Konuyu Seçin: 📚</label>
+            <select id="topicSelect" required>
+                <option value="" disabled selected>Önce ünite seçin</option>
+            </select>
+
+            <!-- Linke Yönlendirme -->
+            <button type="button" id="goButton" disabled>🚀 Git</button>
+        </form>
+    </div>
+
+    <script>
+        const classSelect = document.getElementById('classSelect');
+        const unitSelect = document.getElementById('unitSelect');
+        const topicSelect = document.getElementById('topicSelect');
+        const goButton = document.getElementById('goButton');
+
+        const data = {
+            "5": {
+                "1. ÜNİTE: GÖKYÜZÜNDEKİ KOMŞULARIMIZ VE BİZ": [
+                    { "name": "FB.5.1.1.1. Güneş’in yapısı ve dönme hareketi ile ilgili bilgileri toplayabilme", "link": "https://ders.eba.gov.tr/ders/proxy/VCollabPlayer_v0.0.1048/index.html#/main/curriculumResource?resourceID=55ff1aa871820cbfa07384b4b7c65f65&resourceTypeID=3&loc=0&locID=605a0b51c5253fc72e3b075d7f02749d&showCurriculumPath=false" },
+                    { "name": "FB.5.1.2.1. Ay’ın özellikleri, dönme ve dolanma hareketleri ile ilgili bilimsel çıkarım yapabilme", "link": "https://ders.eba.gov.tr/ders/proxy/VCollabPlayer_v0.0.1048/index.html#/main/curriculumResource?resourceID=3f2db66423f7c6ac501c45cc8a96c0fc&resourceTypeID=3&loc=0&locID=605a0b51c5253fc72e3b075d7f02749d&showCurriculumPath=false" },
+                    { "name": "FB.5.1.2.2. Ay’ın evrelerini temsil eden bilimsel model oluşturabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=95365c129e7799bbc4b4462e1fe00aca&resourceType=1&resourceLocation=2" },
+                    { "name": "FB.5.1.3.1. Güneş, Dünya ve Ay’ın birbirlerine göre hareketlerini ve hacimsel büyüklüklerini temsil eden bilimsel model oluşturabilme", "link": "https://ders.eba.gov.tr/ders/proxy/VCollabPlayer_v0.0.1048/index.html#/main/curriculumResource?resourceID=09c65b4f25bf652f5cfde71f8d697e24&resourceTypeID=3&loc=0&locID=605a0b51c5253fc72e3b075d7f02749d&showCurriculumPath=false" }
+                ],
+                "2. ÜNİTE: KUVVETİ TANIYALIM": [
+                    { "name": "FB.5.2.1. Kuvveti büyüklüğü ile tanımlayabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=dc2820bc3537611db76ebc494c1889b8&resourceType=1&resourceLocation=2" },
+                    { "name": "FB.5.2.2. Basit araç gereçler kullanarak bir dinamometre modeli tasarlayabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=f93565be81a67e2449ed5f58e7a3ab13&resourceType=1&resourceLocation=2" },
+                    { "name": "FB.5.2.2.1. Kütleye etki eden yer çekimi kuvvetini ağırlık olarak tanımlayabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=f1b01d6d07f2e3037cf711ad1e769c63&resourceType=1&resourceLocation=2" },
+                     { "name": "FB.5.2.3.1. Sürtünme kuvvetinin çeşitli ortamlardaki etkilerine yönelik tümevarımsal akıl yürütebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=32cfa1ad4b71f394b8864408db66e112&resourceType=1&resourceLocation=2" },
+                     { "name": "FB.5.2.3.2. Günlük yaşamda sürtünmeyi artırma veya azaltmaya yönelik bilimsel bir model tasarlayabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=80cae2eafc5ce83604f4d07c7c6ffaa2&resourceType=1&resourceLocation=2"}
+                ],
+                "3. ÜNİTE: CANLILARIN YAPISINA YOLCULUK": [
+                { "name": "FB.5.3.1.1. Bitki ve hayvan hücrelerini temel kısımları ve özellikleri açısından karşılaştırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=eae66fe7e8aa902e86faa24ed55f18d7&resourceType=1&resourceLocation=2" },
+                 { "name": "FB.5.3.1.2. Hücre-doku-organ-sistem-organizma kavramlarını yapılandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=80ac54448965835c0c8f24a786f59d14&resourceType=1&resourceLocation=2" },
+                 { "name": "FB.5.3.2.1. Destek ve hareket sistemine ait yapıları sınıflandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=bcae3b9d2d8d5adc543f20e11ef0d665&resourceType=1&resourceLocation=2" },
+                  { "name": "FB.5.3.2.2. Destek ve hareket sisteminin sağlığı için yapılması gerekenler konusunda bilgi toplayabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=fcfc7707f9513e2dcd92e75df6a0530e&resourceType=1&resourceLocation=2" }                 
+                  ],
+                  "4. ÜNİTE: IŞIĞIN DÜNYASI": [ 
+                  { "name": "FB.5.4.1.1. Bir kaynaktan çıkan ışığın her yönde doğrusal bir yol izlediğini gözlem yoluyla açıklayabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=316fceecf2f34f4cea8bd381098c10e6&resourceType=1&resourceLocation=2" },
+                  { "name": "FB.5.4.2.1. Maddeleri ışığı geçirme durumlarına göre sınıflandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=316fceecf2f34f4cea8bd381098c10e6&resourceType=1&resourceLocation=2" },
+                  { "name": "FB.5.4.3.1. Tam gölgeye yönelik bilimsel gözlem yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=9241aeac54e002b3f8d0bf07651669e3&resourceType=1&resourceLocation=2" } 
+                   ],
+                   "5. ÜNİTE: MADDENİN DOĞASI": [
+                   { "name": "FB.5.5.1.1. Maddeleri tanecikli, boşluklu ve hareketli yapısına göre sınıflandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=077195b8275322b828bc088a3d77c2e7&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.5.5.2.1. Isı ve sıcaklık kavramlarını karşılaştırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=2aea950a97e6c7a77394b2b3f4319dff&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.5.5.2.2. Sıcaklığı farklı olan sıvıların karıştırılması sonucu ısı alışverişi olduğuna yönelik bilimsel çıkarım yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=1ae65ead687449a31a5c9986bea73c01&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.5.5.3.1. Maddenin ısı etkisiyle hâl değiştirebileceğini bilimsel gözleme dayalı tahmin edebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=cf5749b2cc39de2c79961ab39d6496c8&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.5.5.4.1. Maddeleri ısı iletimi bakımından sınıflandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=dd830f1e104bd782de0edcfeb3616c72&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.5.5.4.2. Isı yalıtımını gösteren model oluşturabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=1596f5eef4417f70eb3bf91406a9cc62&resourceType=1&resourceLocation=2" }
+                     ],
+                     "6. ÜNİTE: YAŞAMIMIZDAKİ ELEKTRİK": [
+                     { "name": "FB.5.6.1.1. Bir elektrik devresindeki elemanları sembollerinin olup olmamasına göre sınıflandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=93e07a0356afeecba78e3ba304177c14&resourceType=1&resourceLocation=2" },
+                      { "name": "FB.5.6.1.2. Şemasını çizdiği elektrik devresine uygun deney yapabilme a", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=9baa8be59797f7fb8e2fa1c5449d6345&resourceType=1&resourceLocation=2" },
+                      { "name": "FB.5.6.1.2. Şemasını çizdiği elektrik devresine uygun deney yapabilme b", "link":   "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=c431773cef7421d750b255b4b51d1092&resourceType=1&resourceLocation=2" },
+                      { "name": "FB.5.6.2.1. Bir elektrik devresindeki ampul parlaklığını etkileyen değişkenlerin neler olduğuna ilişkin hipotez oluşturabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=70dce1d6bc363e46f8347eb3f8a3dc98&resourceType=1&resourceLocation=2" }
+                     ],
+                     "7. ÜNİTE: SÜRDÜRÜLEBİLİR YAŞAM VE GERİ DÖNÜŞÜM": [
+                     { "name": "FB.5.7.1.1. Evsel atıklarda geri dönüştürülebilen ve dönüştürülemeyen maddeleri sınıflandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=b33279e741f48eb17c14939fcb58972c&resourceType=1&resourceLocation=2" },
+                     { "name": "FB.5.7.1.2. Kaynakların etkili kullanımı konusunda geri dönüşümün önemli olduğuna yönelik bilimsel çıkarımda bulunabilme", "link": "https://ders.eba.gov.tr/ders/proxy/VCollabPlayer_v0.0.1049/index.html#/main/curriculumResource?resourceID=ea5c26749f7a67fa9896783216ab8e62&resourceTypeID=3&loc=0&locID=58bf9039f74b8a7e9bc4f6cd83378ed1&showCurriculumPath=false" },
+                     { "name": "FB.5.7.1.3. Yakın çevresinde atık yönetiminin uygulanabilirliğine ilişkin deneyimlerini yansıtabilme", "link": "https://www.google.com/search?q=at%C4%B1k+y%C3%B6netiminin+uygulanabilirli%C4%9Fine+ili%C5%9Fkin+deneyimlerini+yans%C4%B1tabilme+konu+anlat%C4%B1m%C4%B1&sca_esv=06db9c156e8e19f8&udm=7&biw=1280&bih=711&sxsrf=AHTn8zpBoalqfd0JxF_eMhIpGmziuy4tfg%3A1745482275678&ei=I_IJaO2MKYKFxc8PyJr9-AM&ved=0ahUKEwitqoOYnPCMAxWCQvEDHUhNHz8Q4dUDCBA&uact=5&oq=at%C4%B1k+y%C3%B6netiminin+uygulanabilirli%C4%9Fine+ili%C5%9Fkin+deneyimlerini+yans%C4%B1tabilme+konu+anlat%C4%B1m%C4%B1&gs_lp=EhZnd3Mtd2l6LW1vZGVsZXNzLXZpZGVvIlxhdMSxayB5w7ZuZXRpbWluaW4gdXlndWxhbmFiaWxpcmxpxJ9pbmUgaWxpxZ9raW4gZGVuZXlpbWxlcmluaSB5YW5zxLF0YWJpbG1lIGtvbnUgYW5sYXTEsW3EsUgAUABYAHAAeACQAQCYAQCgAQCqAQC4AQPIAQD4AQGYAgCgAgCYAwCSBwCgBwCyBwC4BwA&sclient=gws-wiz-modeless-video#fpstate=ive&vld=cid:f8c9c769,vid:KTiHMg9KoRg,st:0" }
+                     ]},
+             "6": {
+                  "1. ÜNİTE: GÜNEŞ SİSTEMİ VE TUTULMALAR": [
+                  { "name": "FB.6.1.1.1. Güneş sistemindeki gezegenleri niteliklerine göre sınıflandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=2b5c9c320f9a19573faf2c9083368a4e&resourceType=1&resourceLocation=2" },
+                  { "name": "FB.6.1.1.2. Güneş sistemi ile ilgili bilimsel model oluşturabilme", "link": "https://www.google.com/search?q=g%C3%BCne%C5%9F+sistemi+ile+ilgili+model+haz%C4%B1rlama&oq=g%C3%BCne%C5%9F+sistemi+ile+ilgili+model+haz%C4%B1rlama&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTE1ODI4ajBqN6gCCLACAfEF7fG9jl6Lwjg&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:66f38ec0,vid:2kRtadJlsSU,st:0" },
+                  { "name": "FB.6.1.2.1. Güneş ve Ay tutulması ile ilgili bilimsel çıkarım yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=3b3f6859f001cc20be1b64224eff8ec9&resourceType=1&resourceLocation=2" },
+                  { "name": "FB.6.1.2.2. Güneş ve Ay tutulması ile ilgili bilimsel model oluşturabilme", "link": "https://ders.eba.gov.tr/ders/proxy/VCollabPlayer_v0.0.1049/index.html#/main/curriculumResource?resourceID=a203c2255bf15c2749b8e59426b2598f&resourceTypeID=3&loc=0&showCurriculumPath=false" }
+                     ],
+                   "2. ÜNİTE: KUVVETİN ETKİSİNDE HAREKET": [
+                   { "name": "FB.6.2.1.1. Bir cisme etki eden aynı doğrultudaki kuvvetler arasındaki ilişkileri açıklayarak bileşke kuvveti yapılandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=4b4781303e747e98b9a131615bcf8a75&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.2.1.2. Dengelenmiş ve dengelenmemiş kuvvetlerin etkisi altındaki bir cismin hareketine yönelik deney yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=4b4781303e747e98b9a131615bcf8a75&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.2.2.1. Sürat ve hız kavramlarını karşılaştırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=564af35388367ac23685364207eb8a08&resourceType=1&resourceLocation=2" },
+                  ],
+                   "3. ÜNİTE: CANLILARDA SİSTEMLER": [
+                   { "name": "FB.6.3.1.1. Eşeyli ve eşeysiz üremeyi karşılaştırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=dcf2f737ff70bef61ef6e9ffc27555ed&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.1.2. Bitkilerde üreme, büyüme ve gelişme hakkında bilimsel çıkarım yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=0ae6684f7de6d9e3318165b47b8c29aa&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.1.2. Bitkilerde üreme, büyüme ve gelişme hakkında bilimsel çıkarım yapabilme 2", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=5543132f515c969a7a400bb5715357a8&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.1.3. Tohumun çimlenmesine etki eden faktörlere ilişkin hipotez oluşturabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=acaf9e355df28aa660f0ad482fa6008f&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.1.4. Hayvanlarda üreme, büyüme ve gelişme hakkında bilimsel çıkarım yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=4d0ce01cc033fd58b36b0f3893b9aad9&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.1.5. İnsanda üremeyi sağlayan yapı ve organlar arasındaki ilişkileri çözümleyebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=1cded25198ead75479be733c62fd2c17&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.1.5. İnsanda üremeyi sağlayan yapı ve organlar arasındaki ilişkileri çözümleyebilme 2", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=e3675f08a51f60d2f619bff1fadf98f5&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.1.5. İnsanda üremeyi sağlayan yapı ve organlar arasındaki ilişkileri çözümleyebilme 3", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=acba71c2386a4cbeca7e015678df9fb9&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.2.1. Sinir sisteminin görevlerini model üzerinde gözlemleyebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=4ba35708cc4b1e74995962dfb6735829&resourceType=1&resourceLocation=2" },
+                    { "name": "FB.6.3.2.1. Sinir sisteminin görevlerini model üzerinde gözlemleyebilme 2", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=3aef4947b3348d91dcd05b047eafd5b1&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.2.2. İç salgı bezlerinin vücut için önemini yapılandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=445089847d42ca4fae6517d12b6bc07f&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.2.3. Çocukluktan ergenliğe geçişte oluşan bedensel ve ruhsal değişimleri genelleyebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=9a7493608e97a775287752a42b6b5982&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.3.2.4. Denetleyici ve düzenleyici sistemlerin sağlığı için yapılması gerekenlerle ilgili bilgi toplayabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=3d7f4dd4786a7987b877a145b34caac3&resourceType=1&resourceLocation=2" }
+                  ],
+                   "4. ÜNİTE: IŞIĞIN YANSIMASI VE RENKLER": [
+                   { "name": "FB.6.4.1.1. Işığın farklı yüzeylerdeki yansıma olaylarına ilişkin bilimsel çıkarım yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=d1d6b994c844073bc21d8c1f968c4cbf&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.4.1.2. Işığın yansımasında gelen ışın, yansıyan ışın ve yüzeyin normali arasındaki ilişkiyi kanıt kullanarak açıklayabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=45ed01f9b48b9d9d620109c0cc1d5c42&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.4.2.1. Günlük hayattaki ayna çeşitlerine ilişkin bilimsel çıkarım yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=097ddada8d4d0b2bcf67d891b2297a3a&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.4.3.1. Işığın madde ile etkileşimi sonucunda soğurulabileceğini gözlemleyebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=a2b800051c713b8f8400ed03e2395733&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.4.3.2. Beyaz ışığın tüm ışık renklerinin bileşiminden oluştuğuna ilişkin bilimsel çıkarım yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=c37fa264a6a18afadf4270aa121caf3d&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.4.3.3. Cisimlerin siyah, beyaz ve renkli görünmesinin nedenini gözlem verileriyle açıklayabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=185faec9914f82703ec282f905f00506&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.4.3.4. Güneş enerjisinin günlük hayat ve teknolojideki yenilikçi uygulamalarına ilişkin eleştirel düşünebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=b69407c3f1674af6ccc31118a878bf7d&resourceType=1&resourceLocation=2" }
+                  ],
+                   "5. ÜNİTE: MADDENİN AYIRT EDİCİ ÖZELLİKLERİ": [
+                   { "name": "FB.6.5.1.1. Isı etkisiyle maddelerin genleşip büzüleceğine yönelik bilimsel gözleme dayalı tahmin edebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=e4d3a391ba5a60222ca49ff790726f4a&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.5.2.1. Maddelerin erime, donma ve kaynama noktasını gösteren deney yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=495043f4af424cf4ea141170372e215b&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.5.3.1. Yoğunluğa ilişkin hesaplamalar yaparak bilimsel veriye dayalı tahmin edebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=34f6e1bbcbc3a241ed52211f10bcc2ba&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.5.3.2. Deneyler sonucunda çeşitli maddelerin yoğunluklarına ilişkin tümdengelimsel akıl yürütebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=85f5e247a8c4af4534024b93b536b460&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.5.3.3. Suyun katı ve sıvı hâllerine ait yoğunlukları karşılaştırarak bu durumun canlılar için önemi hakkında bilimsel çıkarımlar yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=c2d9fa5d9bc9e21257e0fe8822304bd9&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.5.3.4. Yoğunluk ile ilgili bilimsel model oluşturabilme", "link": "https://www.youtube.com/watch?v=GcdG833Vao4" }
+                  ],
+
+                   "6. ÜNİTE: ELEKTRİĞİN İLETİMİ VE DİRENÇ": [
+                   { "name": "FB.6.6.1.1. Maddelerin elektriği iletme durumlarını gösteren deney yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=406dd4d70d7218d28aaf7a941c67113a&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.6.2.1. Elektrik devresindeki ampulün parlaklığının bağlı olduğu değişkenleri belirlemeye yönelik deney yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=fa090fa1de05806bae050fd05781f2f0&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.6.2.2. Ayarlanabilir direncin ampulün parlaklığına etkilerine yönelik bilimsel çıkarım yapabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=a5782822e1ea0b3c8cd76e73bca73f1f&resourceType=1&resourceLocation=2" }
+                  ],
+                    "7. ÜNİTE: SÜRDÜRÜLEBİLİR YAŞAM VE ETKİLEŞİM": [
+                   { "name": "FB.6.7.1.1. Biyoçeşitliliğin doğal yaşam için önemini sorgulayabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=8b2eb70f2989279936900a50d7022681&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.7.1.2. Biyoçeşitliliği tehdit eden faktörleri araştırma verilerine dayalı tahmin edebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=1cc96a3c1171016365ae7313445a5053&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.7.2.1. Isınma amaçlı yakıt kullanımının insan ve çevre üzerine etkilerini tartışabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=13aac1531f06db354eba375133408269&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.6.7.2.2. Yakın çevresindeki veya ülkemizdeki bir çevre problemine ilişkin çözüm üretebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=13f1b845e19b9021723f41c04802396c&resourceType=1&resourceLocation=2" }
+
+                   ]
+                     },
+
+               "7": {
+                   "1. ÜNİTE: UZAY ÇAĞI": [
+                   { "name": "FB.7.1.1.1. Uzay araştırmaları için geliştirilen teknolojileri karşılaştırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=a41bd8b0549f9c76aa6df743bd5ffe3b&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.7.1.1.2. Uzay gözlem araçları ile ilgili bilimsel model oluşturabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=22f652970f13e34c9e9f924c26126481&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.7.1.1.3. Uzay araştırmalarının yol açabileceği problemleri çözebilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=22f652970f13e34c9e9f924c26126481&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.7.1.2.1. Yıldızların yaşamını açıklayarak yapılandırabilme", "link": "https://ders.eba.gov.tr/ders//redirectContent.jsp?resourceId=db68a49a966720029c6730f32b797df6&resourceType=1&resourceLocation=2" },
+                   { "name": "FB.7.1.2.2. Yıldız, galaksi ve evren kavramlarını açıklayarak yapılandırabilme", "link": "linki buraya yapıştır" }
+                  ],
+                   "2. ÜNİTE: KUVVET VE ENERJİYİ KEŞFEDELİM": [
+                   { "name": "FB.7.2.1.1. Fiziksel anlamda yapılan işin bağlı olduğu faktörlere ilişkin bilimsel çıkarım yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.2.1.2. Enerji çeşitlerinden kinetik ve potansiyel enerjiyi karşılaştırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.2.2.1. Enerji dönüşümünden hareketle enerjinin korunduğu tümevarımsal akıl yürütebilme", "link": "linki buraya yapıştır" }
+                  ],
+                   "3. ÜNİTE: VÜCUDUMUZDAKİ SİSTEMLER": [
+                   { "name": "FB.7.3.1.1. Sindirim sistemini oluşturan yapı ve organların görevlerini model üzerinde gözlemleyebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.3.1.2. Sindirim sisteminin sağlığı için yapılması gerekenler konusunda bilgi toplayabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.3.2.1. Dolaşım sistemini oluşturan yapı ve organların görevlerini model üzerinde gözlemleyebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.3.2.2. Kan bağışının toplumsal dayanışma açısından önemini tartışabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.3.2.3. Dolaşım sisteminin sağlığı için yapılması gerekenler konusunda bilgi toplayabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.3.3.1. Solunum sistemini oluşturan yapı ve organların görevlerini model üzerinde gözlemleyebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.3.3.2. Solunum sisteminin sağlığı için yapılması gerekenler konusunda bilgi toplayabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.3.4.1. Boşaltım sistemini oluşturan yapı ve organları model üzerinde gözlemleyebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.3.4.2. Boşaltım sisteminin sağlığı için yapılması gerekenler konusunda bilgi toplayabilme", "link": "linki buraya yapıştır" }
+                  ],
+                   "4. ÜNİTE: IŞIĞIN KIRILMASI VE MERCEKLER": [
+                   { "name": "FB.7.4.1.1. Ortam değiştiren ışığın izlediği yolu gözlemleyerek kırılma olayına yönelik bilimsel çıkarım yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.4.2.1. Mercek çeşitlerine yönelik bilimsel çıkarım yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.4.2.2. Merceklerin günlük hayatta kullanım alanlarını örneklerle sınıflandırabilme", "link": "linki buraya yapıştır" }
+                  ],
+                   "5. ÜNİTE: MADDENİN DOĞASINA YOLCULUK": [
+                   { "name": "FB.7.5.1.1. Atomun yapısını ve yapısındaki temel parçacıkları çözümleyebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.5.1.2. Geçmişten günümüze atom kavramı ile ilgili bilimsel bilgilerin değişebileceğini sorgulayabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.5.1.3. Farklı molekül modelleri oluşturabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.5.1.4. Atomların elektron dizilimlerini yapılandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.5.2.1. Saf maddeleri element ve bileşik olarak sınıflandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.5.2.2. Periyodik tablodaki ilk 18 elementin isimlerini sembolleriyle ifade edebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.5.2.3. Periyodik tabloda grup ve periyotları karşılaştırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.5.2.4. Bileşiklerin isimlerini formülleriyle yapılandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.5.3.1. Karışımları homojen ve heterojen olarak sınıflandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.5.3.2. Çözünme hızına etki eden faktörler ile ilgili hipotez oluşturabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.5.4.1. Karışımları ayırmak için çeşitli deneyler yapabilme", "link": "linki buraya yapıştır" }
+                  ],
+                   "6. ÜNİTE: ELEKTRİKLENME": [
+                   { "name": "FB.7.6.1.1. Elektriklenme ile ilgili bilgi toplayabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.6.1.2. Elektriklenme çeşitlerini belirlemeye yönelik deney yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.6.1.3. Cisimlerin elektrik yüklerini sınıflandırabilme", "link": "linki buraya yapıştır" }
+                  ],
+                   "7. ÜNİTE: SÜRDÜRÜLEBİLİR YAŞAM VE GERİ DÖNÜŞÜM": [
+                   { "name": "FB.7.7.1.1. Besin zincirindeki canlıları arasındaki ilişkileri yapılandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.7.7.2.1. Kaynakların tasarruflu kullanımının önemini sorgulayabilme.", "link": "linki buraya yapıştır" }
+                     ] 
+                     },
+
+                "8": {
+                   "1. ÜNİTE: MEVSİMLER VE İKLİM": [
+                   { "name": "FB.8.1.2.1. İklim ve hava olaylarını karşılaştırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.1.2.1. İklim ve hava olaylarını karşılaştırabilme", "link": "linki buraya yapıştır" }
+                  ],
+
+                  "2. ÜNİTE: YAŞAMI KOLAYLAŞTIRAN KUVVET": [
+                   { "name": "FB.8.2.1.1. Basit makineleri sınıflandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "kFB.8.2.1.2. Günlük yaşamda iş kolaylığı sağlayacak bilimsel model oluşturabilme", "link": "linki buraya yapıştır" }
+                  ],
+
+                   "3. ÜNİTE: YAŞAMIN GİZEMİ": [
+                   { "name": "FB.8.3.1.1. Nükleotid, gen, DNA ve kromozom kavramları arasındaki ilişkiyi yapılandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.3.1.2. DNA’nın yapısını model üzerinde gözlemleyebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.3.2.1. Mitoz ve mayoz kavramları arasındaki ilişkiyi karşılaştırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.3.3.1. Kalıtımla ilgili kavramları yapılandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.3.3.2. Tek karakter çaprazlamaları ile ilgili problemler çözerek sonuçları değerlendirebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.3.3.3. Akraba evliliklerinin genetik sonuçlarını tartışabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.3.4.1. Mutasyonla ilgili bilgi toplayabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.3.4.2. Canlıların yaşadıkları çevreye uyumlarına ilişkin bilimsel çıkarım yapabilme", "link": "linki buraya yapıştır" }
+                  ],
+                   "4. ÜNİTE: SESİN DÜNYASI": [
+                   { "name": "FB.8.4.1.1 Sesin oluşumuna yönelik bilimsel çıkarım yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.4.1.2. Sesin yayılabildiği ortamlara yönelik deney yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.4.1.3. Sesin frekansına göre ince veya kalın olarak işitilmesine neden olan ses özellikleri ile ilgili deney yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.4.2.1. Ses ile ilgili değişkenlerin işitmeye etkisi hakkında hipotez oluşturabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.4.2.2. Farklı maddeler ile etkileşimi sonucunda sesin iletilmesi, yansıması ve soğurulmasına ilişkin bilimsel çıkarım yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.4.2.3. Ses kirliliğini önlemeye yönelik bilimsel sorgulama yapabilme", "link": "linki buraya yapıştır" }
+                  ],
+                   "5. ÜNİTE: PERİYODİK TABLO VE MADDENİN ETKİLEŞİMİ": [
+                   { "name": "FB.8.5.1.1. Elementleri periyodik tablo üzerinde metal, ametal, yarımetal ve soy gaz olarak sınıflandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.5.2.1. Fiziksel ve kimyasal değişimler ile ilgili bilimsel gözleme dayalı tahmin edebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.5.3.1. Kimyasal tepkimelerle ilgili bilimsel çıkarım yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.5.3.2. Kimyasal tepkimelerin günlük yaşamdaki etkilerine yönelik bilgi toplayabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.5.4.1. Asit ve bazların genel özelliklerini karşılaştırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.5.4.2. Maddelerin asit veya baz olduğunu çeşitli ayıraçlar kullanarak bilimsel gözleme dayalı tahmin edebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.5.4.3. Maddelerin asitlik ve bazlık durumlarına ilişkin “pH” değerlerini kullanarak tümevarımsal akıl yürütebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.5.4.4. Asit ve bazların çeşitli maddeler üzerindeki etkilerine yönelik deney yapabilme", "link": "linki buraya yapıştır" }
+                  ],
+                   "6. ÜNİTE: ELEKTRİĞİN YOLCULUĞU": [
+                   { "name": "FB.8.6.1.1. Ampullerin bağlanma durumunun ampul parlaklığına etkisine yönelik deney yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.6.1.2. Elektrik akımını tanımlayabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.6.1.3. Bir devre elemanının uçları arasındaki potansiyel farkı (gerilimi) tanımlayabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.6.1.4. Bir devre elemanının uçları arasındaki gerilim ile üzerinden geçen akım ilişkisine yönelik tümevarımsal akıl yürütebilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.6.1.5. Özgün bir aydınlatma aracı modeli oluşturabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.6.2.1. Elektrik enerjisinin dönüştüğü enerjileri sınıflandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.6.2.2. Elektrik enerjisinin ısı, ışık, ses veya hareket enerjisine dönüşümüne yönelik bir model oluşturabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.6.2.3. Elektrik enerjisi üretim santrallerini sınıflandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.6.2.4. Elektrik enerjisi üretim santrallerinin avantaj ve dezavantajlarını tartışabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.6.2.5. Elektrik enerjisinin bilinçli ve tasarruflu kullanılmasının önemini tartışabilme", "link": "linki buraya yapıştır" }
+                  ],
+                   "7. ÜNİTE: SÜRDÜRÜLEBİLİR YAŞAM VE MADDE DÖNGÜLERİ": [
+                   { "name": "FB.8.7.1.1. Bitkilerde besin üretiminde fotosentezin önemini yapılandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.7.1.2. Fotosentez hızını etkileyen faktörler ile ilgili hipotez oluşturabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.7.1.3. Canlılarda solunumun önemini yapılandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.7.2.1. Madde döngülerini şema üzerinde bilimsel çıkarım yapabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.7.2.2. Madde döngülerinin yaşam açısından önemini yapılandırabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.7.2.3. Küresel iklim değişikliklerinin nedenlerini ve olası sonuçlarını tartışabilme", "link": "linki buraya yapıştır" },
+                   { "name": "FB.8.7.2.4. Ülkemizdeki küresel iklim değişikliğinin sebep olduğu bir probleme yönelik çözüm önerisi sunabilme", "link": "linki buraya yapıştır" }
+                     ] 
+                     }
+
+        };
+
+        // Sınıf seçildiğinde üniteleri yükle
+        classSelect.addEventListener('change', function () {
+            const selectedClass = this.value;
+            unitSelect.innerHTML = '<option value="" disabled selected>Ünite Seçin</option>';
+            topicSelect.innerHTML = '<option value="" disabled selected>Önce ünite seçin</option>';
+            goButton.disabled = true;
+            if (data[selectedClass]) {
+                Object.keys(data[selectedClass]).forEach(unit => {
+                    const option = document.createElement('option');
+                    option.value = unit;
+                    option.textContent = unit;
+                    unitSelect.appendChild(option);
+                });
+            }
+        });
+
+        // Ünite seçildiğinde konuları yükle
+        unitSelect.addEventListener('change', function () {
+            const selectedClass = classSelect.value;
+            const selectedUnit = this.value;
+            topicSelect.innerHTML = '<option value="" disabled selected>Konu Seçin</option>';
+            goButton.disabled = true;
+
+            if (data[selectedClass] && data[selectedClass][selectedUnit]) {
+                data[selectedClass][selectedUnit].forEach(topic => {
+                    const option = document.createElement('option');
+                    option.value = topic.link || ""; // Link varsa koy, yoksa boş bırak
+                    option.textContent = topic.name;
+                    topicSelect.appendChild(option);
+                });
+            }
+        });
+
+        // Konu seçildiğinde Git butonunu etkinleştir
+        topicSelect.addEventListener('change', function () {
+            goButton.disabled = false;
+        });
+
+        // Git butonuna basıldığında yönlendirme
+        goButton.addEventListener('click', function () {
+            const selectedLink = topicSelect.value;
+            if (selectedLink) {
+                // Kullanıcıya uyarı göster
+                const confirmMessage = "EBA'da oturum açmanız gerekmektedir. Oturum açtıktan sonra devam edebilirsiniz. Devam etmek istiyor musunuz?";
+                if (confirm(confirmMessage)) {
+                    window.open(selectedLink, "_blank"); // Yeni sekmede aç
+                }
+            } else {
+                alert("Bu konu için bir bağlantı tanımlanmamış.");
+            }
+        });
+    </script>
+</body>
+</html>
